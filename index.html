@@ -525,61 +525,126 @@
       max-width: 65ch;
     }
 
-    /* ── Skills ── */
-    .skills-split {
-      display: grid;
-      gap: 1px;
+    /* ── Skills (cloud) ── */
+    .skills-stage {
+      position: relative;
       margin-top: 3rem;
-      background: var(--border);
-      border: 1px solid var(--border);
-      border-radius: 4px;
+      padding: clamp(2.5rem, 6vw, 4rem);
+      min-height: 320px;
+      border-radius: 6px;
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 20%, rgba(126, 1, 212, 0.14), transparent 55%),
+        radial-gradient(ellipse 60% 50% at 90% 80%, rgba(126, 1, 212, 0.08), transparent 50%),
+        var(--surface);
+      border: 1px solid rgba(126, 1, 212, 0.15);
       overflow: hidden;
     }
-    @media (min-width: 768px) {
-      .skills-split { grid-template-columns: 1fr 1fr; }
+    .skills-stage::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 20%, transparent 75%);
+      opacity: 0.35;
+      pointer-events: none;
     }
-    .skill-group {
-      padding: 2.25rem 2rem;
-      background: var(--surface);
-      transition: background 0.35s;
-    }
-    .skill-group:hover {
-      background: var(--surface-raised);
-    }
-    .skill-group-label {
-      font-family: var(--font-display);
-      font-size: clamp(1.5rem, 3vw, 1.85rem);
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      margin-bottom: 0.35rem;
-    }
-    .skill-group-note {
-      font-size: 0.82rem;
-      color: var(--text-dim);
-      margin-bottom: 1.75rem;
-      line-height: 1.5;
-    }
-    .skill-list {
+    .skills-filters {
+      position: relative;
       display: flex;
       flex-wrap: wrap;
       gap: 0.5rem;
-      list-style: none;
+      margin-bottom: 2rem;
     }
-    .skill-list li {
+    .skills-filter {
       font-family: var(--font-mono);
-      font-size: 0.74rem;
-      letter-spacing: 0.02em;
-      padding: 0.5rem 0.8rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      padding: 0.5rem 1rem;
       border: 1px solid var(--border);
-      border-radius: 2px;
+      border-radius: 999px;
+      background: transparent;
       color: var(--text-muted);
-      background: rgba(255, 255, 255, 0.02);
-      transition: border-color 0.25s, color 0.25s, background 0.25s;
+      cursor: pointer;
+      transition: all 0.3s var(--ease-out);
     }
-    .skill-list li:hover {
-      border-color: rgba(126, 1, 212, 0.35);
+    .skills-filter:hover {
+      border-color: rgba(126, 1, 212, 0.4);
       color: var(--text);
+    }
+    .skills-filter.is-active {
+      background: var(--purple);
+      border-color: var(--purple);
+      color: white;
+      box-shadow: 0 4px 24px var(--purple-glow);
+    }
+    .skills-cloud {
+      position: relative;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-content: center;
+      gap: 0.65rem 0.85rem;
+      min-height: 200px;
+    }
+    .skill-tag {
+      font-family: var(--font-display);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      padding: 0.45rem 0.9rem;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      background: rgba(8, 8, 12, 0.6);
+      color: var(--text-muted);
+      cursor: default;
+      transition:
+        transform 0.4s var(--ease-out),
+        color 0.3s,
+        border-color 0.3s,
+        box-shadow 0.3s,
+        opacity 0.35s;
+      animation: skillFloat 6s ease-in-out infinite;
+    }
+    .skill-tag--lg {
+      font-size: clamp(1.35rem, 3vw, 1.75rem);
+      padding: 0.55rem 1.1rem;
+    }
+    .skill-tag--md {
+      font-size: clamp(1.05rem, 2vw, 1.25rem);
+    }
+    .skill-tag--sm {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+    .skill-tag:nth-child(3n) { animation-delay: -1s; }
+    .skill-tag:nth-child(3n+1) { animation-delay: -2.5s; }
+    .skill-tag:nth-child(3n+2) { animation-delay: -4s; }
+    .skill-tag:hover {
+      transform: scale(1.06) translateY(-4px);
+      color: var(--text);
+      border-color: rgba(126, 1, 212, 0.45);
+      box-shadow: 0 8px 28px var(--purple-glow);
+      z-index: 2;
+    }
+    .skills-stage.is-filtered .skill-tag:not(.is-highlight) {
+      opacity: 0.22;
+      transform: scale(0.96);
+    }
+    .skills-stage.is-filtered .skill-tag.is-highlight {
+      color: var(--purple-light);
+      border-color: rgba(126, 1, 212, 0.5);
       background: var(--purple-dim);
+    }
+    @keyframes skillFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .skill-tag { animation: none; }
     }
 
     /* ── Education ── */
@@ -587,14 +652,14 @@
       margin-top: 3rem;
       display: flex;
       flex-direction: column;
-      gap: 2.5rem;
+      gap: 1.5rem;
     }
     .edu-card {
       position: relative;
-      padding: 2rem;
+      padding: clamp(2rem, 5vw, 3rem);
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 4px;
+      border-radius: 6px;
       overflow: hidden;
       transition: border-color 0.35s, transform 0.35s var(--ease-out);
     }
@@ -604,19 +669,21 @@
     }
     .edu-card--featured {
       background:
-        linear-gradient(160deg, rgba(126, 1, 212, 0.1) 0%, transparent 45%),
+        linear-gradient(135deg, rgba(126, 1, 212, 0.16) 0%, transparent 50%),
+        linear-gradient(225deg, rgba(126, 1, 212, 0.06) 0%, transparent 40%),
         var(--surface);
-      border-color: rgba(126, 1, 212, 0.18);
+      border-color: rgba(126, 1, 212, 0.25);
     }
     .edu-watermark {
       position: absolute;
-      top: -0.15em;
-      right: 0.05em;
+      top: 50%;
+      right: -0.02em;
+      transform: translateY(-50%);
       font-family: var(--font-display);
-      font-size: clamp(5rem, 12vw, 8rem);
+      font-size: clamp(6rem, 18vw, 11rem);
       font-weight: 800;
       line-height: 1;
-      color: rgba(126, 1, 212, 0.07);
+      color: rgba(126, 1, 212, 0.09);
       pointer-events: none;
       user-select: none;
     }
@@ -636,18 +703,18 @@
     .edu-degree {
       position: relative;
       font-family: var(--font-display);
-      font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+      font-size: clamp(1.5rem, 3.5vw, 2.25rem);
       font-weight: 600;
-      letter-spacing: -0.02em;
-      line-height: 1.2;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
       margin-bottom: 0.5rem;
-      max-width: 18ch;
+      max-width: 16ch;
     }
     .edu-school {
       position: relative;
-      font-size: 0.88rem;
+      font-size: 0.95rem;
       color: var(--text-muted);
-      margin-bottom: 1rem;
+      margin-bottom: 1.25rem;
     }
     .edu-meta {
       position: relative;
@@ -669,67 +736,76 @@
       border-color: rgba(126, 1, 212, 0.25);
       background: rgba(126, 1, 212, 0.06);
     }
-    .edu-earlier {
+    .edu-stats {
       display: grid;
-      gap: 0;
-      border-top: 1px solid var(--border);
+      gap: 1rem;
     }
     @media (min-width: 640px) {
-      .edu-earlier { grid-template-columns: 1fr 1fr; }
+      .edu-stats { grid-template-columns: 1fr 1fr; }
     }
-    .edu-earlier-item {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 1.25rem 1.5rem;
-      padding: 1.75rem 0;
-      align-items: start;
+    .edu-stat {
+      position: relative;
+      padding: 1.75rem 1.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      transition: border-color 0.35s, transform 0.35s var(--ease-out);
     }
-    @media (min-width: 640px) {
-      .edu-earlier-item {
-        padding: 1.75rem 2rem;
-      }
-      .edu-earlier-item:first-child {
-        border-right: 1px solid var(--border);
-        padding-left: 0;
-      }
-      .edu-earlier-item:last-child {
-        padding-right: 0;
-      }
+    .edu-stat::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--purple), transparent);
+      opacity: 0;
+      transition: opacity 0.35s;
     }
-    @media (max-width: 639px) {
-      .edu-earlier-item + .edu-earlier-item {
-        border-top: 1px solid var(--border);
-      }
+    .edu-stat:hover {
+      border-color: rgba(126, 1, 212, 0.3);
+      transform: translateY(-3px);
     }
-    .edu-earlier-year {
-      font-family: var(--font-mono);
-      font-size: 0.68rem;
-      letter-spacing: 0.06em;
-      color: var(--purple-light);
-      writing-mode: vertical-rl;
-      transform: rotate(180deg);
-      padding-top: 0.15rem;
+    .edu-stat:hover::before {
+      opacity: 1;
     }
-    @media (max-width: 639px) {
-      .edu-earlier-year {
-        writing-mode: horizontal-tb;
-        transform: none;
-      }
+    .edu-stat-head {
+      display: flex;
+      align-items: flex-end;
+      gap: 0.35rem;
+      margin-bottom: 0.75rem;
     }
-    .edu-earlier-title {
+    .edu-stat-num {
       font-family: var(--font-display);
-      font-size: 1.05rem;
-      font-weight: 600;
-      margin-bottom: 0.3rem;
+      font-size: clamp(3rem, 8vw, 4.5rem);
+      font-weight: 800;
+      line-height: 0.85;
+      letter-spacing: -0.04em;
+      color: var(--purple-light);
     }
-    .edu-earlier-school {
+    .edu-stat-unit {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      padding-bottom: 0.35rem;
+    }
+    .edu-stat-title {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+    .edu-stat-school {
       font-size: 0.85rem;
       color: var(--text-muted);
-      margin-bottom: 0.65rem;
+      margin-bottom: 0.5rem;
     }
-    .edu-earlier-detail {
+    .edu-stat-detail {
       font-family: var(--font-mono);
-      font-size: 0.65rem;
+      font-size: 0.62rem;
       letter-spacing: 0.04em;
       color: var(--text-dim);
     }
@@ -1030,31 +1106,25 @@
         <p class="section-label reveal">Capabilities</p>
         <h2 class="section-title reveal">Skills</h2>
         <p class="section-desc reveal">
-          Full-stack capable with a frontend specialty — from data layers to the interfaces users actually touch.
+          Tap a layer to spotlight it — everything I ship with, in one place.
         </p>
 
-        <div class="skills-split">
-          <div class="skill-group reveal">
-            <h3 class="skill-group-label">Frontend</h3>
-            <p class="skill-group-note">Interfaces, components, and the tools that power them.</p>
-            <ul class="skill-list">
-              <li>TypeScript</li>
-              <li>JavaScript</li>
-              <li>React</li>
-              <li>Next.js</li>
-              <li>TanStack Tools</li>
-              <li>HTML & CSS</li>
-              <li>TailwindCSS</li>
-            </ul>
+        <div class="skills-stage reveal" id="skillsStage">
+          <div class="skills-filters" role="tablist" aria-label="Skill groups">
+            <button type="button" class="skills-filter is-active" data-filter="all" role="tab" aria-selected="true">All</button>
+            <button type="button" class="skills-filter" data-filter="fe" role="tab" aria-selected="false">Frontend</button>
+            <button type="button" class="skills-filter" data-filter="be" role="tab" aria-selected="false">Backend</button>
           </div>
-
-          <div class="skill-group reveal">
-            <h3 class="skill-group-label">Backend</h3>
-            <p class="skill-group-note">Data, version control, and shipping reliably.</p>
-            <ul class="skill-list">
-              <li>PostgreSQL</li>
-              <li>Git & GitHub</li>
-            </ul>
+          <div class="skills-cloud">
+            <span class="skill-tag skill-tag--lg" data-group="fe">React</span>
+            <span class="skill-tag skill-tag--lg" data-group="fe">TypeScript</span>
+            <span class="skill-tag skill-tag--md" data-group="fe">TanStack Tools</span>
+            <span class="skill-tag skill-tag--md" data-group="fe">Next.js</span>
+            <span class="skill-tag skill-tag--md" data-group="fe">JavaScript</span>
+            <span class="skill-tag skill-tag--sm" data-group="fe">TailwindCSS</span>
+            <span class="skill-tag skill-tag--sm" data-group="fe">HTML &amp; CSS</span>
+            <span class="skill-tag skill-tag--md" data-group="be">PostgreSQL</span>
+            <span class="skill-tag skill-tag--sm" data-group="be">Git &amp; GitHub</span>
           </div>
         </div>
       </div>
@@ -1065,7 +1135,7 @@
         <p class="section-label reveal">Background</p>
         <h2 class="section-title reveal">Education</h2>
         <p class="section-desc reveal">
-          A strong foundation in computer science and the sciences — built before the first line of production code.
+          University honours up top — the numbers that got me there, below.
         </p>
 
         <div class="edu-layout">
@@ -1081,23 +1151,24 @@
             </div>
           </article>
 
-          <div class="edu-earlier reveal">
-            <div class="edu-earlier-item">
-              <span class="edu-earlier-year">2016 – 2017</span>
-              <div>
-                <h3 class="edu-earlier-title">Advanced Level — 14 Points</h3>
-                <p class="edu-earlier-school">Gokomere High School · Masvingo</p>
-                <p class="edu-earlier-detail">Physics (A) · Mathematics (A) · Chemistry (B)</p>
+          <div class="edu-stats reveal">
+            <div class="edu-stat">
+              <div class="edu-stat-head">
+                <span class="edu-stat-num">14</span>
+                <span class="edu-stat-unit">points</span>
               </div>
+              <p class="edu-stat-title">Advanced Level</p>
+              <p class="edu-stat-school">Gokomere High School · 2016 – 2017</p>
+              <p class="edu-stat-detail">Physics (A) · Mathematics (A) · Chemistry (B)</p>
             </div>
-
-            <div class="edu-earlier-item">
-              <span class="edu-earlier-year">2012 – 2015</span>
-              <div>
-                <h3 class="edu-earlier-title">Ordinary Level — 9 A's, 1 B</h3>
-                <p class="edu-earlier-school">All Souls High School · Mutoko</p>
-                <p class="edu-earlier-detail">10 subjects · 9 A's</p>
+            <div class="edu-stat">
+              <div class="edu-stat-head">
+                <span class="edu-stat-num">9</span>
+                <span class="edu-stat-unit">A's</span>
               </div>
+              <p class="edu-stat-title">Ordinary Level</p>
+              <p class="edu-stat-school">All Souls High School · 2012 – 2015</p>
+              <p class="edu-stat-detail">10 subjects · 1 B</p>
             </div>
           </div>
         </div>
@@ -1174,6 +1245,35 @@
       { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
     );
     reveals.forEach(el => observer.observe(el));
+
+    const skillsStage = document.getElementById('skillsStage');
+    if (skillsStage) {
+      const filters = skillsStage.querySelectorAll('.skills-filter');
+      const tags = skillsStage.querySelectorAll('.skill-tag');
+
+      filters.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const group = btn.dataset.filter;
+
+          filters.forEach(f => {
+            const active = f === btn;
+            f.classList.toggle('is-active', active);
+            f.setAttribute('aria-selected', active ? 'true' : 'false');
+          });
+
+          if (group === 'all') {
+            skillsStage.classList.remove('is-filtered');
+            tags.forEach(tag => tag.classList.remove('is-highlight'));
+            return;
+          }
+
+          skillsStage.classList.add('is-filtered');
+          tags.forEach(tag => {
+            tag.classList.toggle('is-highlight', tag.dataset.group === group);
+          });
+        });
+      });
+    }
   </script>
 </body>
 </html>
