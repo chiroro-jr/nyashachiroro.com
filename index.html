@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Nyasha D. Chiroro — Frontend Software Engineer building production interfaces for logistics and mobility platforms in Zimbabwe.">
+  <title>Nyasha D. Chiroro — Frontend Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,800;1,9..144,400&family=Outfit:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --purple: #7e01d4;
+      --purple-light: #a855f7;
+      --purple-dim: rgba(126, 1, 212, 0.12);
+      --purple-glow: rgba(126, 1, 212, 0.35);
+      --bg: #08080c;
+      --surface: #111116;
+      --surface-raised: #18181f;
+      --border: rgba(255, 255, 255, 0.07);
+      --text: #eceaf2;
+      --text-muted: #8a8698;
+      --text-dim: #5c5868;
+      --font-display: 'Fraunces', Georgia, serif;
+      --font-body: 'Outfit', system-ui, sans-serif;
+      --font-mono: 'IBM Plex Mono', monospace;
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --max-width: 1180px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 5rem;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    ::selection {
+      background: var(--purple);
+      color: white;
+    }
+
+    /* Grain overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.5;
+    }
+
+    /* Ambient glow */
+    .ambient {
+      position: fixed;
+      width: 60vw;
+      height: 60vw;
+      border-radius: 50%;
+      filter: blur(120px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .ambient--1 {
+      top: -20%;
+      right: -15%;
+      background: radial-gradient(circle, var(--purple-glow) 0%, transparent 70%);
+      opacity: 0.4;
+    }
+    .ambient--2 {
+      bottom: 10%;
+      left: -20%;
+      background: radial-gradient(circle, rgba(126, 1, 212, 0.15) 0%, transparent 70%);
+      opacity: 0.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .wrap {
+      position: relative;
+      z-index: 1;
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 clamp(1.25rem, 4vw, 2.5rem);
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1rem 0;
+      transition: background 0.4s var(--ease-out), border-color 0.4s;
+      border-bottom: 1px solid transparent;
+    }
+    nav.scrolled {
+      background: rgba(8, 8, 12, 0.85);
+      backdrop-filter: blur(16px);
+      border-color: var(--border);
+    }
+    nav .wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      color: var(--text);
+    }
+    .nav-logo span { color: var(--purple-light); }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      padding: 0.55rem 1.1rem;
+      border: 1px solid var(--purple);
+      color: var(--purple-light);
+      border-radius: 2px;
+      transition: background 0.25s, color 0.25s, box-shadow 0.25s;
+    }
+    .nav-cta:hover {
+      background: var(--purple);
+      color: white;
+      box-shadow: 0 0 24px var(--purple-glow);
+    }
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text);
+      cursor: pointer;
+      padding: 0.25rem;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 0 5rem;
+      position: relative;
+    }
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--purple-light);
+      margin-bottom: 1.75rem;
+      opacity: 0;
+      animation: fadeUp 0.8s var(--ease-out) 0.1s forwards;
+    }
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      font-weight: 800;
+      line-height: 1.02;
+      letter-spacing: -0.03em;
+      max-width: 14ch;
+      opacity: 0;
+      animation: fadeUp 0.9s var(--ease-out) 0.2s forwards;
+    }
+    .hero h1 em {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--purple-light);
+    }
+    .hero-sub {
+      margin-top: 2rem;
+      max-width: 52ch;
+      font-size: clamp(1.05rem, 2vw, 1.2rem);
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.7;
+      opacity: 0;
+      animation: fadeUp 0.9s var(--ease-out) 0.35s forwards;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 2.75rem;
+      opacity: 0;
+      animation: fadeUp 0.9s var(--ease-out) 0.5s forwards;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+      padding: 0.85rem 1.5rem;
+      border-radius: 2px;
+      transition: all 0.3s var(--ease-out);
+      cursor: pointer;
+      border: none;
+    }
+    .btn-primary {
+      background: var(--purple);
+      color: white;
+    }
+    .btn-primary:hover {
+      background: var(--purple-light);
+      box-shadow: 0 8px 32px var(--purple-glow);
+      transform: translateY(-2px);
+    }
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+    }
+    .btn-ghost:hover {
+      border-color: var(--text-muted);
+      color: var(--text);
+    }
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2.5rem;
+      margin-top: 5rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid var(--border);
+      opacity: 0;
+      animation: fadeUp 0.9s var(--ease-out) 0.65s forwards;
+    }
+    .hero-stat-label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 0.35rem;
+    }
+    .hero-stat-value {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text);
+    }
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.5rem;
+      right: clamp(1.25rem, 4vw, 2.5rem);
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      writing-mode: vertical-rl;
+      opacity: 0;
+      animation: fadeUp 1s var(--ease-out) 1s forwards;
+    }
+    .hero-scroll::after {
+      content: '';
+      display: block;
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, var(--purple), transparent);
+      margin: 0.75rem auto 0;
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    /* ── Sections ── */
+    section { padding: 7rem 0; }
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--purple-light);
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4.5vw, 3rem);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+    .section-desc {
+      color: var(--text-muted);
+      font-weight: 300;
+      max-width: 55ch;
+      font-size: 1.05rem;
+      line-height: 1.7;
+    }
+
+    /* ── Work ── */
+    .work-grid {
+      display: grid;
+      gap: 2rem;
+      margin-top: 3.5rem;
+    }
+    .work-card {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: border-color 0.4s, transform 0.4s var(--ease-out);
+    }
+    @media (min-width: 768px) {
+      .work-card { grid-template-columns: 1.1fr 1fr; }
+      .work-card:nth-child(even) .work-visual { order: 2; }
+    }
+    .work-card:hover {
+      border-color: rgba(126, 1, 212, 0.35);
+      transform: translateY(-4px);
+    }
+    .work-visual {
+      position: relative;
+      min-height: 280px;
+      overflow: hidden;
+      background: var(--surface-raised);
+    }
+    .work-visual-inner {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 2rem;
+    }
+    .work-visual--kargo {
+      background:
+        linear-gradient(135deg, rgba(126, 1, 212, 0.25) 0%, transparent 50%),
+        linear-gradient(225deg, #0f0f18 0%, #1a1028 100%);
+    }
+    .work-visual--kar {
+      background:
+        linear-gradient(135deg, rgba(126, 1, 212, 0.18) 0%, transparent 50%),
+        linear-gradient(225deg, #0f0f18 0%, #12101a 100%);
+    }
+    .work-visual-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 40px 40px;
+      opacity: 0.5;
+    }
+    .work-visual-tag {
+      position: relative;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--purple-light);
+      background: var(--purple-dim);
+      border: 1px solid rgba(126, 1, 212, 0.25);
+      padding: 0.35rem 0.7rem;
+      border-radius: 2px;
+      width: fit-content;
+      margin-bottom: 1rem;
+    }
+    .work-visual-title {
+      position: relative;
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+    .work-body {
+      padding: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .work-role {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--text-dim);
+      letter-spacing: 0.06em;
+      margin-bottom: 0.75rem;
+    }
+    .work-desc {
+      color: var(--text-muted);
+      font-weight: 300;
+      line-height: 1.75;
+      margin-bottom: 1.5rem;
+    }
+    .work-highlights {
+      list-style: none;
+      margin-bottom: 1.75rem;
+    }
+    .work-highlights li {
+      position: relative;
+      padding-left: 1.25rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+    .work-highlights li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.55em;
+      width: 5px;
+      height: 5px;
+      background: var(--purple);
+      border-radius: 50%;
+    }
+    .work-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.75rem;
+    }
+    .tag {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      padding: 0.3rem 0.65rem;
+      background: var(--surface-raised);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--text-muted);
+    }
+    .work-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--purple-light);
+      transition: gap 0.25s var(--ease-out);
+    }
+    .work-link:hover { gap: 0.65rem; }
+    .work-link svg { transition: transform 0.25s; }
+    .work-link:hover svg { transform: translate(2px, -2px); }
+
+    /* ── Experience ── */
+    .timeline {
+      --track-x: 7px;
+      --track-gap: 1.75rem;
+      --dot-size: 9px;
+      margin-top: 3.5rem;
+      position: relative;
+      padding-left: calc(var(--track-x) + var(--track-gap));
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: var(--track-x);
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      transform: translateX(-50%);
+      background: linear-gradient(to bottom, var(--purple), var(--border) 80%);
+    }
+    .timeline-item {
+      position: relative;
+      padding-bottom: 3rem;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: calc(-1 * var(--track-gap) - var(--dot-size) / 2);
+      top: 0.38rem;
+      width: var(--dot-size);
+      height: var(--dot-size);
+      background: var(--purple);
+      border-radius: 50%;
+      box-shadow: 0 0 12px var(--purple-glow);
+    }
+    .timeline-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.5rem 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .timeline-company {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+    .timeline-date {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      letter-spacing: 0.04em;
+    }
+    .timeline-role {
+      font-size: 0.9rem;
+      color: var(--purple-light);
+      margin-bottom: 0.75rem;
+      font-weight: 500;
+    }
+    .timeline-desc {
+      color: var(--text-muted);
+      font-weight: 300;
+      font-size: 0.95rem;
+      line-height: 1.7;
+      max-width: 65ch;
+    }
+
+    /* ── Skills ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 0.75rem;
+      margin-top: 2rem;
+    }
+    .skill-item {
+      padding: 1rem 1.1rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      font-size: 0.88rem;
+      font-weight: 400;
+      color: var(--text-muted);
+      transition: border-color 0.3s, color 0.3s, background 0.3s;
+    }
+    .skill-item:hover {
+      border-color: rgba(126, 1, 212, 0.3);
+      color: var(--text);
+      background: var(--purple-dim);
+    }
+    .edu-list { list-style: none; margin-top: 2.5rem; max-width: 42rem; }
+    .edu-item {
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .edu-item:first-child { padding-top: 0; }
+    .edu-degree {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+    .edu-school {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 0.35rem;
+    }
+    .edu-detail {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--purple-light);
+      letter-spacing: 0.04em;
+    }
+
+    /* ── Contact ── */
+    .contact {
+      padding-bottom: 4rem;
+    }
+    .contact-box {
+      margin-top: 3rem;
+      padding: clamp(2.5rem, 6vw, 4rem);
+      background:
+        linear-gradient(135deg, rgba(126, 1, 212, 0.08) 0%, transparent 60%),
+        var(--surface);
+      border: 1px solid rgba(126, 1, 212, 0.2);
+      border-radius: 4px;
+      text-align: center;
+    }
+    .contact-box .section-title {
+      max-width: 20ch;
+      margin: 0 auto 1rem;
+    }
+    .contact-box .section-desc {
+      margin: 0 auto 2.5rem;
+    }
+    .contact-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+    }
+    .contact-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      padding: 0.75rem 1.25rem;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--text-muted);
+      transition: all 0.25s;
+    }
+    .contact-link:hover {
+      border-color: var(--purple);
+      color: var(--purple-light);
+      background: var(--purple-dim);
+    }
+
+    footer {
+      padding: 2rem 0 3rem;
+      border-top: 1px solid var(--border);
+    }
+    footer .wrap {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+    footer p {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--text-dim);
+      letter-spacing: 0.04em;
+    }
+
+    /* ── Reveal on scroll ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── Animations ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(0.6); transform-origin: top; }
+      50% { opacity: 1; transform: scaleY(1); }
+    }
+
+    /* ── Mobile nav ── */
+    @media (max-width: 640px) {
+      .nav-links, .nav-cta { display: none; }
+      .nav-toggle { display: block; }
+      nav.menu-open .nav-links {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(8, 8, 12, 0.97);
+        backdrop-filter: blur(16px);
+        padding: 1.5rem clamp(1.25rem, 4vw, 2.5rem);
+        gap: 1.25rem;
+        border-bottom: 1px solid var(--border);
+      }
+      nav.menu-open .nav-cta {
+        display: inline-flex;
+        position: absolute;
+        top: calc(100% + 9rem);
+        right: clamp(1.25rem, 4vw, 2.5rem);
+      }
+      .hero-scroll { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="ambient ambient--1" aria-hidden="true"></div>
+  <div class="ambient ambient--2" aria-hidden="true"></div>
+
+  <nav id="nav">
+    <div class="wrap">
+      <a href="#" class="nav-logo">NDC<span>.</span></a>
+      <ul class="nav-links">
+        <li><a href="#work">Work</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <a href="mailto:chirorodennis@gmail.com" class="nav-cta">Hire me</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M4 7h16M4 12h16M4 17h16"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="wrap">
+      <p class="hero-eyebrow">Frontend Software Engineer · Harare, Zimbabwe</p>
+      <h1>I build interfaces that move <em>businesses</em> forward.</h1>
+      <p class="hero-sub">
+        Frontend engineer building production interfaces for Africa's logistics and mobility platforms — freight marketplaces, fleet dashboards, and car rental at scale.
+      </p>
+      <div class="hero-actions">
+        <a href="#work" class="btn btn-primary">View my work</a>
+        <a href="https://github.com/chiroro-jr/" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">
+          GitHub →
+        </a>
+      </div>
+      <div class="hero-meta">
+        <div>
+          <p class="hero-stat-label">Currently</p>
+          <p class="hero-stat-value">Frontend Engineer @ MyKargoLink</p>
+        </div>
+        <div>
+          <p class="hero-stat-label">Education</p>
+          <p class="hero-stat-value">BSc Hons CS — First Class</p>
+        </div>
+        <div>
+          <p class="hero-stat-label">Focus</p>
+          <p class="hero-stat-value">TanStack Start</p>
+        </div>
+      </div>
+    </div>
+    <span class="hero-scroll" aria-hidden="true">Scroll</span>
+  </header>
+
+  <main>
+    <section id="work">
+      <div class="wrap">
+        <p class="section-label reveal">Selected Work</p>
+        <h2 class="section-title reveal">Production platforms I've helped build</h2>
+        <p class="section-desc reveal">
+          Real products serving shippers, fleet operators, drivers, and renters across Zimbabwe and beyond — not mockups.
+        </p>
+
+        <div class="work-grid">
+          <article class="work-card reveal">
+            <div class="work-visual work-visual--kargo">
+              <div class="work-visual-grid" aria-hidden="true"></div>
+              <div class="work-visual-inner">
+                <span class="work-visual-tag">Logistics · Marketplace</span>
+                <h3 class="work-visual-title">MyKargoLink</h3>
+              </div>
+            </div>
+            <div class="work-body">
+              <p class="work-role">Frontend Software Engineer · Aug 2025 – Present</p>
+              <p class="work-desc">
+                An all-in-one logistics platform connecting shippers, transporters, service providers, and drivers. I build the interfaces that power intelligent freight matching, live load visibility, fleet management dashboards, and a vetted driver marketplace.
+              </p>
+              <ul class="work-highlights">
+                <li>Shipped responsive UI for load boards, bidding flows, and real-time tracking views</li>
+                <li>Translated complex multi-role UX into scalable Next.js and Angular components</li>
+                <li>Collaborated cross-functionally with designers and backend on payment & messaging features</li>
+              </ul>
+              <div class="work-stack">
+                <span class="tag">Next.js</span>
+                <span class="tag">Angular</span>
+                <span class="tag">TailwindCSS</span>
+                <span class="tag">Bootstrap</span>
+                <span class="tag">TypeScript</span>
+              </div>
+              <a href="https://mykargolink.com" target="_blank" rel="noopener noreferrer" class="work-link">
+                Visit mykargolink.com
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M2 12L12 2M12 2H5M12 2V9"/>
+                </svg>
+              </a>
+            </div>
+          </article>
+
+          <article class="work-card reveal">
+            <div class="work-visual work-visual--kar">
+              <div class="work-visual-grid" aria-hidden="true"></div>
+              <div class="work-visual-inner">
+                <span class="work-visual-tag">Mobility · Car Rental</span>
+                <h3 class="work-visual-title">MyKarLink</h3>
+              </div>
+            </div>
+            <div class="work-body">
+              <p class="work-role">Frontend Software Developer · Nov 2024 – Aug 2025</p>
+              <p class="work-desc">
+                Zimbabwe's car rental and vehicle-sharing platform with 24/7 support, multi-location pickup, and a best-price guarantee. I owned the frontend for vehicle discovery, booking flows, and renter-facing dashboards across Harare, Bulawayo, Gweru, and Victoria Falls.
+              </p>
+              <ul class="work-highlights">
+                <li>Built responsive booking and fleet-browsing experiences used by customers nationwide</li>
+                <li>Implemented design-system components with TailwindCSS and Bootstrap</li>
+                <li>Optimized UI performance for mobile-first users across varying network conditions</li>
+              </ul>
+              <div class="work-stack">
+                <span class="tag">Next.js</span>
+                <span class="tag">Angular</span>
+                <span class="tag">TailwindCSS</span>
+                <span class="tag">Bootstrap</span>
+                <span class="tag">JavaScript</span>
+              </div>
+              <a href="https://mykarlink.com" target="_blank" rel="noopener noreferrer" class="work-link">
+                Visit mykarlink.com
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M2 12L12 2M12 2H5M12 2V9"/>
+                </svg>
+              </a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience">
+      <div class="wrap">
+        <p class="section-label reveal">Experience</p>
+        <h2 class="section-title reveal">Where I've shipped code</h2>
+        <p class="section-desc reveal">
+          Two years of focused frontend engineering on live products, plus foundational IT experience from enterprise healthcare.
+        </p>
+
+        <div class="timeline">
+          <div class="timeline-item reveal">
+            <div class="timeline-header">
+              <h3 class="timeline-company">MyKargoLink</h3>
+              <span class="timeline-date">Aug 2025 – Present</span>
+            </div>
+            <p class="timeline-role">Frontend Software Engineer</p>
+            <p class="timeline-desc">
+              Developing and maintaining user interfaces for a multi-sided logistics marketplace. Translating UI/UX designs into responsive, production-grade components. Building scalable frontend architecture with modern frameworks.
+            </p>
+          </div>
+
+          <div class="timeline-item reveal">
+            <div class="timeline-header">
+              <h3 class="timeline-company">MyKarLink</h3>
+              <span class="timeline-date">Nov 2024 – Aug 2025</span>
+            </div>
+            <p class="timeline-role">Frontend Software Developer</p>
+            <p class="timeline-desc">
+              Led frontend development for Zimbabwe's car rental platform. Shipped vehicle hiring and renting flows, collaborated with designers and backend engineers, and maintained a scalable component library.
+            </p>
+          </div>
+
+          <div class="timeline-item reveal">
+            <div class="timeline-header">
+              <h3 class="timeline-company">First Mutual Health</h3>
+              <span class="timeline-date">Mar 2022 – Dec 2022</span>
+            </div>
+            <p class="timeline-role">IT Intern</p>
+            <p class="timeline-desc">
+              Provided technical support across hardware, software, and networks. Installed and configured systems, set up VPNs, and trained users — building the troubleshooting mindset that still informs how I debug production UIs.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="wrap">
+        <p class="section-label reveal">Capabilities</p>
+        <h2 class="section-title reveal">Skills</h2>
+        <p class="section-desc reveal">
+          Full-stack capable with a frontend specialty. Comfortable from database queries to pixel-perfect components.
+        </p>
+        <div class="skills-grid reveal">
+          <span class="skill-item">TypeScript</span>
+          <span class="skill-item">JavaScript</span>
+          <span class="skill-item">React</span>
+          <span class="skill-item">Next.js</span>
+          <span class="skill-item">TanStack Tools</span>
+          <span class="skill-item">HTML & CSS</span>
+          <span class="skill-item">TailwindCSS</span>
+          <span class="skill-item">PostgreSQL</span>
+          <span class="skill-item">Git & GitHub</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="education">
+      <div class="wrap">
+        <p class="section-label reveal">Background</p>
+        <h2 class="section-title reveal">Education</h2>
+        <p class="section-desc reveal">
+          Strong academic foundation in computer science and the sciences.
+        </p>
+        <ul class="edu-list reveal">
+          <li class="edu-item">
+            <p class="edu-degree">BSc Hons Computer Science</p>
+            <p class="edu-school">University of Zimbabwe · Harare</p>
+            <p class="edu-detail">First Class Honours · 2018 – 2023</p>
+          </li>
+          <li class="edu-item">
+            <p class="edu-degree">Advanced Level — 14 Points</p>
+            <p class="edu-school">Gokomere High School · Masvingo</p>
+            <p class="edu-detail">Physics (A) · Mathematics (A) · Chemistry (B)</p>
+          </li>
+          <li class="edu-item">
+            <p class="edu-degree">Ordinary Level — 9 A's, 1 B</p>
+            <p class="edu-school">All Souls High School · Mutoko</p>
+            <p class="edu-detail">2012 – 2015</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="contact" class="contact">
+      <div class="wrap">
+        <div class="contact-box reveal">
+          <p class="section-label">Let's work together</p>
+          <h2 class="section-title">Ready to build something that ships?</h2>
+          <p class="section-desc">
+            I'm open to frontend roles, contract work, and collaborations on products that matter. Let's talk about what you're building.
+          </p>
+          <div class="contact-links">
+            <a href="mailto:chirorodennis@gmail.com" class="contact-link">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3">
+                <rect x="1.5" y="3.5" width="13" height="9" rx="1"/>
+                <path d="M1.5 5l6.5 4 6.5-4"/>
+              </svg>
+              chirorodennis@gmail.com
+            </a>
+            <a href="tel:+263785015651" class="contact-link">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3">
+                <path d="M3.5 2h2.5l1 3-2 1.5a7 7 0 003.5 3.5L10 8l3 1v2.5a1 1 0 01-1 1A11 11 0 012 4.5a1 1 0 011-1z"/>
+              </svg>
+              +263 785 015 651
+            </a>
+            <a href="https://github.com/chiroro-jr/" target="_blank" rel="noopener noreferrer" class="contact-link">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                <path d="M8 1a7 7 0 00-2.2 13.6c.35.06.48-.15.48-.34v-1.2c-1.95.42-2.36-.94-2.36-.94-.32-.82-.78-1.04-.78-1.04-.64-.44.05-.43.05-.43.7.05 1.07.72 1.07.72.63 1.07 1.64.76 2.04.58.06-.45.24-.76.44-.94-1.56-.18-3.2-.78-3.2-3.46 0-.76.27-1.39.72-1.88-.07-.18-.31-.88.07-1.83 0 0 .58-.19 1.92.72a6.5 6.5 0 013.5 0c1.33-.91 1.91-.72 1.91-.72.38.95.14 1.65.07 1.83.45.49.72 1.12.72 1.88 0 2.69-1.65 3.28-3.22 3.46.25.22.48.64.48 1.29v1.91c0 .19.13.41.49.34A7 7 0 008 1z"/>
+              </svg>
+              github.com/chiroro-jr
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <p>© 2026 Nyasha D. Chiroro</p>
+      <p>Harare, Zimbabwe</p>
+    </div>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    const navToggle = document.getElementById('navToggle');
+
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    navToggle.addEventListener('click', () => {
+      nav.classList.toggle('menu-open');
+    });
+
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => nav.classList.remove('menu-open'));
+    });
+
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+    );
+    reveals.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
