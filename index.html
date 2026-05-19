@@ -526,49 +526,218 @@
     }
 
     /* ── Skills ── */
-    .skills-grid {
+    .skills-bento {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-      gap: 0.75rem;
-      margin-top: 2rem;
+      gap: 1rem;
+      margin-top: 3rem;
     }
-    .skill-item {
-      padding: 1rem 1.1rem;
+    @media (min-width: 768px) {
+      .skills-bento {
+        grid-template-columns: repeat(12, 1fr);
+        grid-template-rows: auto auto;
+      }
+    }
+    .skill-panel {
+      position: relative;
+      padding: 1.75rem;
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 3px;
-      font-size: 0.88rem;
-      font-weight: 400;
-      color: var(--text-muted);
-      transition: border-color 0.3s, color 0.3s, background 0.3s;
+      border-radius: 4px;
+      overflow: hidden;
+      transition: border-color 0.35s, transform 0.35s var(--ease-out);
     }
-    .skill-item:hover {
-      border-color: rgba(126, 1, 212, 0.3);
+    .skill-panel::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 80px;
+      height: 80px;
+      background: radial-gradient(circle at top right, var(--purple-dim), transparent 70%);
+      pointer-events: none;
+    }
+    .skill-panel:hover {
+      border-color: rgba(126, 1, 212, 0.28);
+      transform: translateY(-3px);
+    }
+    .skill-panel--core {
+      grid-column: span 12;
+    }
+    @media (min-width: 768px) {
+      .skill-panel--core { grid-column: span 7; }
+    }
+    .skill-panel--stack {
+      grid-column: span 12;
+    }
+    @media (min-width: 768px) {
+      .skill-panel--stack { grid-column: span 5; }
+    }
+    .skill-panel--infra {
+      grid-column: span 12;
+    }
+    .skill-panel-head {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+    .skill-panel-index {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.08em;
+      color: var(--purple-light);
+      opacity: 0.7;
+    }
+    .skill-panel-title {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+    .skill-panel-desc {
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      margin: -0.5rem 0 1rem;
+      line-height: 1.5;
+    }
+    .skill-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      list-style: none;
+    }
+    .skill-chip {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.02em;
+      padding: 0.45rem 0.75rem;
+      background: var(--surface-raised);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--text-muted);
+      transition: border-color 0.25s, color 0.25s, background 0.25s;
+    }
+    .skill-chip:hover {
+      border-color: rgba(126, 1, 212, 0.35);
       color: var(--text);
       background: var(--purple-dim);
     }
-    .edu-list { list-style: none; margin-top: 2.5rem; max-width: 42rem; }
-    .edu-item {
-      padding: 1.5rem 0;
-      border-bottom: 1px solid var(--border);
+    .skill-chip--accent {
+      border-color: rgba(126, 1, 212, 0.35);
+      color: var(--purple-light);
+      background: rgba(126, 1, 212, 0.08);
     }
-    .edu-item:first-child { padding-top: 0; }
-    .edu-degree {
+
+    /* ── Education ── */
+    .edu-bento {
+      display: grid;
+      gap: 1rem;
+      margin-top: 3rem;
+    }
+    @media (min-width: 768px) {
+      .edu-bento {
+        grid-template-columns: 1.4fr 1fr;
+        grid-template-rows: auto auto;
+      }
+    }
+    .edu-card {
+      position: relative;
+      padding: 2rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: border-color 0.35s, transform 0.35s var(--ease-out);
+    }
+    .edu-card:hover {
+      border-color: rgba(126, 1, 212, 0.28);
+      transform: translateY(-3px);
+    }
+    .edu-card--featured {
+      grid-row: span 2;
+    }
+    @media (max-width: 767px) {
+      .edu-card--featured { grid-row: span 1; }
+    }
+    .edu-card--featured {
+      background:
+        linear-gradient(160deg, rgba(126, 1, 212, 0.1) 0%, transparent 45%),
+        var(--surface);
+      border-color: rgba(126, 1, 212, 0.18);
+    }
+    .edu-watermark {
+      position: absolute;
+      top: -0.15em;
+      right: 0.05em;
       font-family: var(--font-display);
-      font-size: 1.05rem;
+      font-size: clamp(5rem, 12vw, 8rem);
+      font-weight: 800;
+      line-height: 1;
+      color: rgba(126, 1, 212, 0.07);
+      pointer-events: none;
+      user-select: none;
+    }
+    .edu-badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--purple-light);
+      background: var(--purple-dim);
+      border: 1px solid rgba(126, 1, 212, 0.25);
+      padding: 0.35rem 0.65rem;
+      border-radius: 2px;
+      margin-bottom: 1.25rem;
+    }
+    .edu-degree {
+      position: relative;
+      font-family: var(--font-display);
+      font-size: clamp(1.2rem, 2.5vw, 1.5rem);
       font-weight: 600;
-      margin-bottom: 0.25rem;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+      max-width: 18ch;
+    }
+    .edu-card:not(.edu-card--featured) .edu-degree {
+      font-size: 1.05rem;
+      max-width: none;
     }
     .edu-school {
+      position: relative;
       font-size: 0.88rem;
       color: var(--text-muted);
-      margin-bottom: 0.35rem;
+      margin-bottom: 1rem;
     }
-    .edu-detail {
+    .edu-meta {
+      position: relative;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .edu-meta span {
       font-family: var(--font-mono);
-      font-size: 0.68rem;
-      color: var(--purple-light);
+      font-size: 0.65rem;
       letter-spacing: 0.04em;
+      color: var(--text-dim);
+      padding: 0.3rem 0.6rem;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+    }
+    .edu-meta span.highlight {
+      color: var(--purple-light);
+      border-color: rgba(126, 1, 212, 0.25);
+      background: rgba(126, 1, 212, 0.06);
+    }
+    .edu-card-year {
+      position: absolute;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.08em;
+      color: var(--text-dim);
     }
 
     /* ── Contact ── */
@@ -867,18 +1036,48 @@
         <p class="section-label reveal">Capabilities</p>
         <h2 class="section-title reveal">Skills</h2>
         <p class="section-desc reveal">
-          Full-stack capable with a frontend specialty. Comfortable from database queries to pixel-perfect components.
+          Full-stack capable with a frontend specialty — from data layers to the interfaces users actually touch.
         </p>
-        <div class="skills-grid reveal">
-          <span class="skill-item">TypeScript</span>
-          <span class="skill-item">JavaScript</span>
-          <span class="skill-item">React</span>
-          <span class="skill-item">Next.js</span>
-          <span class="skill-item">TanStack Tools</span>
-          <span class="skill-item">HTML & CSS</span>
-          <span class="skill-item">TailwindCSS</span>
-          <span class="skill-item">PostgreSQL</span>
-          <span class="skill-item">Git & GitHub</span>
+
+        <div class="skills-bento">
+          <article class="skill-panel skill-panel--core reveal">
+            <header class="skill-panel-head">
+              <span class="skill-panel-index">01</span>
+              <h3 class="skill-panel-title">Frontend Core</h3>
+            </header>
+            <p class="skill-panel-desc">The languages and libraries I reach for daily.</p>
+            <ul class="skill-chips">
+              <li class="skill-chip">TypeScript</li>
+              <li class="skill-chip">JavaScript</li>
+              <li class="skill-chip">React</li>
+              <li class="skill-chip">HTML & CSS</li>
+              <li class="skill-chip">TailwindCSS</li>
+            </ul>
+          </article>
+
+          <article class="skill-panel skill-panel--stack reveal">
+            <header class="skill-panel-head">
+              <span class="skill-panel-index">02</span>
+              <h3 class="skill-panel-title">Current Focus</h3>
+            </header>
+            <p class="skill-panel-desc">Where most of my energy is going right now.</p>
+            <ul class="skill-chips">
+              <li class="skill-chip skill-chip--accent">TanStack Tools</li>
+              <li class="skill-chip">Next.js</li>
+            </ul>
+          </article>
+
+          <article class="skill-panel skill-panel--infra reveal">
+            <header class="skill-panel-head">
+              <span class="skill-panel-index">03</span>
+              <h3 class="skill-panel-title">Backend & Workflow</h3>
+            </header>
+            <p class="skill-panel-desc">Enough to collaborate across the stack and ship end-to-end.</p>
+            <ul class="skill-chips">
+              <li class="skill-chip">PostgreSQL</li>
+              <li class="skill-chip">Git & GitHub</li>
+            </ul>
+          </article>
         </div>
       </div>
     </section>
@@ -888,25 +1087,43 @@
         <p class="section-label reveal">Background</p>
         <h2 class="section-title reveal">Education</h2>
         <p class="section-desc reveal">
-          Strong academic foundation in computer science and the sciences.
+          A strong foundation in computer science and the sciences — built before the first line of production code.
         </p>
-        <ul class="edu-list reveal">
-          <li class="edu-item">
-            <p class="edu-degree">BSc Hons Computer Science</p>
+
+        <div class="edu-bento">
+          <article class="edu-card edu-card--featured reveal">
+            <span class="edu-watermark" aria-hidden="true">2023</span>
+            <span class="edu-badge">First Class Honours</span>
+            <h3 class="edu-degree">BSc Hons Computer Science</h3>
             <p class="edu-school">University of Zimbabwe · Harare</p>
-            <p class="edu-detail">First Class Honours · 2018 – 2023</p>
-          </li>
-          <li class="edu-item">
-            <p class="edu-degree">Advanced Level — 14 Points</p>
+            <div class="edu-meta">
+              <span class="highlight">2018 – 2023</span>
+              <span>Computer Science</span>
+              <span>Harare</span>
+            </div>
+          </article>
+
+          <article class="edu-card reveal">
+            <h3 class="edu-degree">Advanced Level — 14 Points</h3>
             <p class="edu-school">Gokomere High School · Masvingo</p>
-            <p class="edu-detail">Physics (A) · Mathematics (A) · Chemistry (B)</p>
-          </li>
-          <li class="edu-item">
-            <p class="edu-degree">Ordinary Level — 9 A's, 1 B</p>
+            <div class="edu-meta">
+              <span class="highlight">Physics A</span>
+              <span class="highlight">Mathematics A</span>
+              <span>Chemistry B</span>
+            </div>
+            <span class="edu-card-year">2016 – 2017</span>
+          </article>
+
+          <article class="edu-card reveal">
+            <h3 class="edu-degree">Ordinary Level — 9 A's, 1 B</h3>
             <p class="edu-school">All Souls High School · Mutoko</p>
-            <p class="edu-detail">2012 – 2015</p>
-          </li>
-        </ul>
+            <div class="edu-meta">
+              <span>10 subjects</span>
+              <span class="highlight">9 A's</span>
+            </div>
+            <span class="edu-card-year">2012 – 2015</span>
+          </article>
+        </div>
       </div>
     </section>
 
