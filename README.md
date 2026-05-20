@@ -31,34 +31,29 @@ npx serve public -l 8765
 | `public/index.html` | Portfolio page |
 | `public/og-image.jpg` | Social preview image (1200×630, ~60 KB) |
 | `public/cv.pdf` | Downloadable CV |
-| `og.html` | Source template to regenerate the OG image (not deployed) |
-| `logo.html` | Source template for the NDC. logo (not deployed) |
-| `logo.png` | Square logo for [favicon.io converter](https://favicon.io/favicon-converter/) |
-| `cv.md` | CV source (markdown) |
+| `public/favicon/` | Favicon package (from favicon.io) |
+| `asset-gen/` | Source templates and scripts to generate OG image and logo (not deployed) |
 | `wrangler.jsonc` | Cloudflare Workers config |
 
-### Regenerate OG image
+### Generate OG image
 
-Edit `og.html`, then:
+Requires `chromium` and `magick` (ImageMagick). Edit `asset-gen/og.html`, then:
 
 ```bash
-chromium --headless=new --disable-gpu --hide-scrollbars --window-size=1200,630 \
-  --screenshot=public/og-image.png "file://$(pwd)/og.html"
-magick public/og-image.png -strip -quality 82 public/og-image.jpg
+./asset-gen/generate-og.sh
 ```
 
 Social meta tags point to `og-image.jpg` (smaller file — WhatsApp often fails on 700 KB+ PNGs).
 
-### Regenerate logo (for favicon)
+### Generate logo (for favicon)
 
-Edit `logo.html`, then:
+Requires `chromium`. Edit `asset-gen/logo.html`, then:
 
 ```bash
-chromium --headless=new --disable-gpu --hide-scrollbars --window-size=512,512 \
-  --screenshot=logo.png "file://$(pwd)/logo.html"
+./asset-gen/generate-logo.sh
 ```
 
-Upload `logo.png` to [favicon.io/favicon-converter](https://favicon.io/favicon-converter/), download the package, and place the generated files in `public/favicon/`.
+Upload `asset-gen/logo.png` to [favicon.io/favicon-converter](https://favicon.io/favicon-converter/), download the package, and place the generated files in `public/favicon/`.
 
 ## Contact
 
