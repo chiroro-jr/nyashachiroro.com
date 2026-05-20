@@ -1014,25 +1014,39 @@
     @media (max-width: 640px) {
       .nav-links, .nav-actions { display: none; }
       .nav-toggle { display: block; }
+
+      nav.menu-open {
+        background: rgba(8, 8, 12, 0.97);
+        backdrop-filter: blur(16px);
+        border-bottom: 1px solid var(--border);
+      }
+      nav.menu-open .wrap {
+        flex-wrap: wrap;
+        align-items: center;
+      }
+      nav.menu-open .nav-logo { order: 1; }
+      nav.menu-open .nav-toggle { order: 2; }
       nav.menu-open .nav-links {
         display: flex;
         flex-direction: column;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background: rgba(8, 8, 12, 0.97);
-        backdrop-filter: blur(16px);
-        padding: 1.5rem clamp(1.25rem, 4vw, 2.5rem);
+        order: 3;
+        width: 100%;
+        padding: 1.25rem 0 1rem;
         gap: 1.25rem;
         border-bottom: 1px solid var(--border);
       }
       nav.menu-open .nav-actions {
         display: flex;
-        position: absolute;
-        top: calc(100% + 9rem);
-        right: clamp(1.25rem, 4vw, 2.5rem);
-        gap: 0.5rem;
+        flex-direction: column;
+        order: 4;
+        width: 100%;
+        align-items: stretch;
+        gap: 0.75rem;
+        padding: 1rem 0 0.25rem;
+      }
+      nav.menu-open .nav-actions a {
+        text-align: center;
+        width: 100%;
       }
     }
   </style>
@@ -1073,9 +1087,6 @@
       <div class="hero-actions">
         <a href="mailto:chirorodennis@gmail.com" class="btn btn-primary">Work with me</a>
         <a href="cv.pdf" class="btn btn-ghost" download="Nyasha-Chiroro-CV.pdf">Download CV</a>
-        <a href="https://github.com/chiroro-jr/" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">
-          GitHub →
-        </a>
       </div>
       <div class="hero-meta">
         <div>
@@ -1356,7 +1367,7 @@
       nav.classList.toggle('menu-open');
     });
 
-    document.querySelectorAll('.nav-links a').forEach(link => {
+    document.querySelectorAll('.nav-links a, .nav-actions a').forEach(link => {
       link.addEventListener('click', () => nav.classList.remove('menu-open'));
     });
 
