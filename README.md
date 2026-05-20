@@ -25,8 +25,8 @@ npx serve . -l 8765
 | File | Description |
 |------|-------------|
 | `index.html` | Portfolio page |
-| `og-image.png` | Social preview image (1200×630) |
-| `og.html` | Source template to regenerate `og-image.png` |
+| `og-image.jpg` | Social preview image for WhatsApp, etc. (1200×630, ~60 KB) |
+| `og.html` | Source template to regenerate the OG image |
 | `cv.pdf` | Downloadable CV |
 | `cv.md` | CV source (markdown) |
 
@@ -36,7 +36,10 @@ Edit `og.html`, then:
 
 ```bash
 chromium --headless=new --disable-gpu --hide-scrollbars --window-size=1200,630 --screenshot=og-image.png "file://$(pwd)/og.html"
+magick og-image.png -strip -quality 82 og-image.jpg
 ```
+
+Social meta tags point to `og-image.jpg` (smaller file — WhatsApp often fails on 700 KB+ PNGs).
 
 ## Contact
 
