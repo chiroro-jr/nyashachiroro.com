@@ -11,10 +11,14 @@ Deploy `index.html` and `cv.pdf` to any static host. The site is self-contained 
 ## Local preview
 
 ```bash
-python -m http.server 8765
+npx serve .
 ```
 
-Open [http://localhost:8765](http://localhost:8765).
+Serves the project directory at [http://localhost:3000](http://localhost:3000) by default. Use a custom port if needed:
+
+```bash
+npx serve . -l 8765
+```
 
 ## Project structure
 
