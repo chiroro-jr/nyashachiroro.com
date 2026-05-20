@@ -25,8 +25,18 @@ npx serve . -l 8765
 | File | Description |
 |------|-------------|
 | `index.html` | Portfolio page |
+| `og-image.png` | Social preview image (1200×630) |
+| `og.html` | Source template to regenerate `og-image.png` |
 | `cv.pdf` | Downloadable CV |
 | `cv.md` | CV source (markdown) |
+
+### Regenerate OG image
+
+Edit `og.html`, then:
+
+```bash
+chromium --headless=new --disable-gpu --hide-scrollbars --window-size=1200,630 --screenshot=og-image.png "file://$(pwd)/og.html"
+```
 
 ## Contact
 

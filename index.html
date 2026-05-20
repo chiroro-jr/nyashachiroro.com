@@ -3,8 +3,96 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Nyasha D. Chiroro — Frontend Software Engineer building production interfaces for logistics and mobility platforms in Zimbabwe.">
-  <title>Nyasha D. Chiroro — Frontend Engineer</title>
+  <title>Nyasha D. Chiroro — Full Stack Developer</title>
+  <meta name="description" content="Nyasha D. Chiroro is a Full Stack Developer in Harare, Zimbabwe. He builds production software for logistics and mobility platforms — from interfaces and APIs to databases. React, TypeScript, TanStack, PostgreSQL. Available for work.">
+  <meta name="author" content="Nyasha D. Chiroro">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#7e01d4">
+  <link rel="canonical" href="https://nyashachiroro.com/">
+  <link rel="me" href="https://github.com/chiroro-jr/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Nyasha D. Chiroro">
+  <meta property="og:title" content="Nyasha D. Chiroro — Full Stack Developer">
+  <meta property="og:description" content="Full stack developer shipping production software for Africa's logistics and mobility platforms. First Class CS graduate. Based in Harare, Zimbabwe. Available for work.">
+  <meta property="og:url" content="https://nyashachiroro.com/">
+  <meta property="og:locale" content="en_ZW">
+  <meta property="og:image" content="https://nyashachiroro.com/og-image.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Nyasha D. Chiroro — Full Stack Developer portfolio">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Nyasha D. Chiroro — Full Stack Developer">
+  <meta name="twitter:description" content="Full stack developer shipping production software for logistics &amp; mobility in Zimbabwe. React, TypeScript, TanStack, PostgreSQL. Available for work.">
+  <meta name="twitter:image" content="https://nyashachiroro.com/og-image.png">
+  <meta name="twitter:image:alt" content="Nyasha D. Chiroro — Full Stack Developer portfolio">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://nyashachiroro.com/#website",
+        "url": "https://nyashachiroro.com/",
+        "name": "Nyasha D. Chiroro",
+        "description": "Portfolio of Nyasha D. Chiroro, Full Stack Developer",
+        "inLanguage": "en"
+      },
+      {
+        "@type": "Person",
+        "@id": "https://nyashachiroro.com/#person",
+        "name": "Nyasha D. Chiroro",
+        "url": "https://nyashachiroro.com/",
+        "email": "chirorodennis@gmail.com",
+        "jobTitle": "Full Stack Developer",
+        "description": "Full Stack Developer building production software for logistics and mobility platforms in Zimbabwe.",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Harare",
+          "addressCountry": "ZW"
+        },
+        "sameAs": [
+          "https://github.com/chiroro-jr/"
+        ],
+        "knowsAbout": [
+          "TypeScript",
+          "JavaScript",
+          "React",
+          "Next.js",
+          "TanStack",
+          "HTML",
+          "CSS",
+          "Tailwind CSS",
+          "PostgreSQL"
+        ],
+        "worksFor": {
+          "@type": "Organization",
+          "name": "MyKargoLink"
+        },
+        "alumniOf": {
+          "@type": "CollegeOrUniversity",
+          "name": "University of Zimbabwe"
+        }
+      },
+      {
+        "@type": "ProfilePage",
+        "@id": "https://nyashachiroro.com/#profile",
+        "url": "https://nyashachiroro.com/",
+        "name": "Nyasha D. Chiroro — Full Stack Developer",
+        "description": "Portfolio and CV of Nyasha D. Chiroro",
+        "mainEntity": { "@id": "https://nyashachiroro.com/#person" },
+        "isPartOf": { "@id": "https://nyashachiroro.com/#website" },
+        "inLanguage": "en"
+      }
+    ]
+  }
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,800;1,9..144,400&family=Outfit:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -284,15 +372,15 @@
       color: var(--text);
     }
     .hero-scroll {
-      position: absolute;
-      bottom: 2.5rem;
-      right: clamp(1.25rem, 4vw, 2.5rem);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 3rem;
       font-family: var(--font-mono);
       font-size: 0.65rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--text-dim);
-      writing-mode: vertical-rl;
       opacity: 0;
       animation: fadeUp 1s var(--ease-out) 1s forwards;
     }
@@ -938,7 +1026,6 @@
         right: clamp(1.25rem, 4vw, 2.5rem);
         gap: 0.5rem;
       }
-      .hero-scroll { display: none; }
     }
   </style>
 </head>
@@ -958,7 +1045,7 @@
       </ul>
       <div class="nav-actions">
         <a href="cv.pdf" class="nav-cv" download="Nyasha-Chiroro-CV.pdf">Download CV</a>
-        <a href="mailto:chirorodennis@gmail.com" class="nav-cta">Hire me</a>
+        <a href="mailto:chirorodennis@gmail.com" class="nav-cta">Work with me</a>
       </div>
       <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -970,13 +1057,13 @@
 
   <header class="hero">
     <div class="wrap">
-      <p class="hero-eyebrow">Frontend Software Engineer · Harare, Zimbabwe</p>
-      <h1>I build interfaces that move <em>businesses</em> forward.</h1>
+      <p class="hero-eyebrow">Full Stack Developer · Harare, Zimbabwe</p>
+      <h1>I build software that moves <em>businesses</em> forward.</h1>
       <p class="hero-sub">
-        Frontend engineer building production interfaces for Africa's logistics and mobility platforms — freight marketplaces, fleet dashboards, and car rental at scale.
+        Full stack developer building production apps for Africa's logistics and mobility platforms — interfaces, APIs, and data layers that work together at scale.
       </p>
       <div class="hero-actions">
-        <a href="mailto:chirorodennis@gmail.com" class="btn btn-primary">Hire me</a>
+        <a href="mailto:chirorodennis@gmail.com" class="btn btn-primary">Work with me</a>
         <a href="cv.pdf" class="btn btn-ghost" download="Nyasha-Chiroro-CV.pdf">Download CV</a>
         <a href="https://github.com/chiroro-jr/" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">
           GitHub →
@@ -996,8 +1083,8 @@
           <p class="hero-stat-value">TanStack Start</p>
         </div>
       </div>
+      <span class="hero-scroll" aria-hidden="true">Scroll</span>
     </div>
-    <span class="hero-scroll" aria-hidden="true">Scroll</span>
   </header>
 
   <main>
@@ -1086,7 +1173,7 @@
         <p class="section-label reveal">Experience</p>
         <h2 class="section-title reveal">Where I've shipped code</h2>
         <p class="section-desc reveal">
-          Two years of focused frontend engineering on live products, plus foundational IT experience from enterprise healthcare.
+          Two years shipping production software on live products, plus foundational IT experience from enterprise healthcare.
         </p>
 
         <div class="timeline">
@@ -1204,9 +1291,9 @@
       <div class="wrap">
         <div class="contact-box reveal">
           <p class="section-label">Let's work together</p>
-          <h2 class="section-title">Ready to build something that ships?</h2>
+          <h2 class="section-title">Have a project or role in mind?</h2>
           <p class="section-desc">
-            I'm open to frontend roles, contract work, and collaborations on products that matter. Let's talk about what you're building.
+            I'm open to full stack roles, contract work, and collaborations on products that matter. Let's talk about what you're building.
           </p>
           <div class="contact-links">
             <a href="cv.pdf" class="contact-link" download="Nyasha-Chiroro-CV.pdf">
