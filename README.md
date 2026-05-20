@@ -1,42 +1,48 @@
 # nyashachiroro.com
 
-Personal portfolio for **Nyasha D. Chiroro** — Frontend Software Engineer based in Harare, Zimbabwe.
+Personal portfolio for **Nyasha D. Chiroro** — Full Stack Developer based in Harare, Zimbabwe.
 
 Single-page site showcasing production work on logistics and mobility platforms (MyKargoLink, MyKarLink), experience, skills, and education.
 
 ## Live site
 
-Deploy `index.html` and `cv.pdf` to any static host. The site is self-contained (HTML, CSS, and JS in one file).
+Static files in `public/` are deployed via Cloudflare Workers. Deploy with:
+
+```bash
+npx wrangler deploy
+```
 
 ## Local preview
 
 ```bash
-npx serve .
+npx serve public
 ```
 
-Serves the project directory at [http://localhost:3000](http://localhost:3000) by default. Use a custom port if needed:
+Serves the site at [http://localhost:3000](http://localhost:3000) by default. Use a custom port if needed:
 
 ```bash
-npx serve . -l 8765
+npx serve public -l 8765
 ```
 
 ## Project structure
 
-| File | Description |
+| Path | Description |
 |------|-------------|
-| `index.html` | Portfolio page |
-| `og-image.jpg` | Social preview image for WhatsApp, etc. (1200×630, ~60 KB) |
-| `og.html` | Source template to regenerate the OG image |
-| `cv.pdf` | Downloadable CV |
+| `public/index.html` | Portfolio page |
+| `public/og-image.jpg` | Social preview image (1200×630, ~60 KB) |
+| `public/cv.pdf` | Downloadable CV |
+| `og.html` | Source template to regenerate the OG image (not deployed) |
 | `cv.md` | CV source (markdown) |
+| `wrangler.jsonc` | Cloudflare Workers config |
 
 ### Regenerate OG image
 
 Edit `og.html`, then:
 
 ```bash
-chromium --headless=new --disable-gpu --hide-scrollbars --window-size=1200,630 --screenshot=og-image.png "file://$(pwd)/og.html"
-magick og-image.png -strip -quality 82 og-image.jpg
+chromium --headless=new --disable-gpu --hide-scrollbars --window-size=1200,630 \
+  --screenshot=public/og-image.png "file://$(pwd)/og.html"
+magick public/og-image.png -strip -quality 82 public/og-image.jpg
 ```
 
 Social meta tags point to `og-image.jpg` (smaller file — WhatsApp often fails on 700 KB+ PNGs).
