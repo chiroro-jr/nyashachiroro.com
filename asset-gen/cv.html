@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CV - Nyasha D. Chiroro</title>
+<meta name="author" content="Nyasha D. Chiroro">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4; margin: 15mm 17mm 14mm; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Outfit', system-ui, sans-serif;
+    font-weight: 400;
+    font-size: 9.6pt;
+    line-height: 1.45;
+    color: #1d1b22;
+  }
+  a { color: inherit; text-decoration: none; }
+  header { border-bottom: 1.5pt solid #7e01d4; padding-bottom: 9pt; margin-bottom: 11pt; }
+  h1 { font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 22pt; line-height: 1.1; letter-spacing: -0.01em; }
+  .title { font-size: 11pt; font-weight: 500; color: #7e01d4; margin: 2pt 0 3pt; }
+  .contact { margin-top: 2pt; color: #4a4652; font-size: 9pt; }
+  .contact span + span::before { content: "·"; margin: 0 5pt; color: #9a96a3; }
+  h2 {
+    font-size: 8.5pt; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+    color: #7e01d4; margin: 12pt 0 5pt;
+  }
+  section:first-of-type h2 { margin-top: 0; }
+  p.summary { color: #2c2932; }
+  .job { margin-bottom: 9pt; break-inside: avoid; }
+  .job-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12pt; }
+  .job-head h3 { font-size: 10.5pt; font-weight: 600; }
+  .job-head h3 .role { font-weight: 400; color: #4a4652; }
+  .dates { font-size: 9pt; color: #4a4652; white-space: nowrap; }
+  .about { color: #4a4652; font-style: italic; margin: 1pt 0 3pt; }
+  ul { padding-left: 12pt; }
+  li { margin-top: 2pt; }
+  li::marker { color: #7e01d4; }
+  .stack { margin-top: 3pt; font-size: 8.8pt; color: #4a4652; }
+  .stack b { font-weight: 500; color: #2c2932; }
+  .skills { display: grid; grid-template-columns: 34mm 1fr; row-gap: 2.5pt; column-gap: 8pt; }
+  .skills dt { font-weight: 500; }
+  .edu { margin-bottom: 5pt; break-inside: avoid; }
+  .edu .job-head h3 { font-size: 10pt; }
+  .ref p { margin-top: 1pt; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Nyasha D. Chiroro</h1>
+  <p class="title">Software Engineer</p>
+  <p class="contact">
+    <span>Harare, Zimbabwe</span>
+    <span>+263 785 015 651</span>
+    <span><a href="mailto:chirorodennis@gmail.com">chirorodennis@gmail.com</a></span>
+  </p>
+  <p class="contact">
+    <span><a href="https://nyashachiroro.com">nyashachiroro.com</a></span>
+    <span><a href="https://github.com/chiroro-jr">github.com/chiroro-jr</a></span>
+    <span><a href="https://www.linkedin.com/in/nyasha-chiroro-470038221">linkedin.com/in/nyasha-chiroro-470038221</a></span>
+  </p>
+</header>
+
+<section>
+  <h2>Summary</h2>
+  <p class="summary">
+    Software engineer with two years of production experience across mobile, web, backend, and cloud infrastructure.
+    I build Flutter and React apps, REST APIs in .NET and Java Spring Boot on PostgreSQL and MariaDB, and the CI/CD
+    pipelines and AWS environments they ship through. I currently work on Aplyk, an EU-based staffing app, and
+    MyKargoLink, a logistics platform in Harare. BSc Honours in Computer Science, First Class, from the University of Zimbabwe.
+  </p>
+</section>
+
+<section>
+  <h2>Experience</h2>
+
+  <div class="job">
+    <div class="job-head">
+      <h3>Aplyk <span class="role">· Software Engineer · Remote</span></h3>
+      <span class="dates">Jul 2026 – Present</span>
+    </div>
+    <p class="about">An app where companies fill short-notice shifts with verified temporary staff. In closed testing ahead of its first launch in Spain.</p>
+    <ul>
+      <li>Built the Flutter app for Android and iOS that replaced two separate native apps: sign-in and onboarding, finding and applying for shifts, running shifts as a company, and Spanish and English support.</li>
+      <li>Added identity verification (Didit) and push notifications (Firebase Cloud Messaging), and built the GitHub Actions pipeline that sends test builds to Google Play and TestFlight.</li>
+      <li>Have written most changes to the C# .NET backend since August 2026, including xUnit and Testcontainers tests against PostgreSQL for two people accepting the last opening on a shift at the same time, and checks that shift search stays fast as data grows.</li>
+      <li>Co-designed a shorter company sign-up: companies enter only what is needed to verify them and add locations and managers when they first need them.</li>
+      <li>Defined staging and production on AWS in code with OpenTofu and Ansible, deployed with Docker through Coolify, with database backups and rehearsed rebuilds and restores.</li>
+    </ul>
+    <p class="stack"><b>Stack:</b> Flutter, Dart, C#, .NET, PostgreSQL, AWS, OpenTofu, Ansible, Docker, GitHub Actions</p>
+  </div>
+
+  <div class="job">
+    <div class="job-head">
+      <h3>MyKargoLink <span class="role">· Software Engineer · Hybrid, Harare</span></h3>
+      <span class="dates">Aug 2025 – Present</span>
+    </div>
+    <p class="about">A logistics platform where shippers post loads, carriers bid on and haul them, and drivers find work. Live on the web, Android, and iOS.</p>
+    <ul>
+      <li>Started the React and TanStack Start web app and wrote most of it: loads, invoices and payments, PDF documents, a services marketplace, and the admin dashboard.</li>
+      <li>Shipped the same codebase to Android and iOS with Capacitor, using native plugins for file downloads and background location.</li>
+      <li>Built GPS load tracking end to end: Spring Boot endpoints, a driver app that stores every location offline and uploads it when signal returns, and a live map for shippers. Tested it on a 580 km trip from Beitbridge to Harare.</li>
+      <li>Generated a typed TypeScript API client from the backend's OpenAPI spec and published it as a private package used by both MyKargoLink and MyKarLink, so breaking backend changes fail the frontend build instead of production.</li>
+      <li>Built sign-in with one-time codes sent by WhatsApp or email, and added identity verification to the platform's fraud checks.</li>
+      <li>Write REST endpoints in the shared Java Spring Boot backend (MariaDB), unit tests with Vitest, and CI and release pipelines in GitHub Actions.</li>
+    </ul>
+    <p class="stack"><b>Stack:</b> React, TypeScript, TanStack Start, Capacitor, Java, Spring Boot, MariaDB, Vitest, GitHub Actions</p>
+  </div>
+
+  <div class="job">
+    <div class="job-head">
+      <h3>MyKarLink <span class="role">· Software Engineer · Hybrid, Harare</span></h3>
+      <span class="dates">Nov 2024 – Aug 2025</span>
+    </div>
+    <p class="about">A car rental marketplace where people search, book, and pay online for vehicles from different rental companies.</p>
+    <ul>
+      <li>Started the Next.js renter website and wrote most of it: search and filters, vehicle pages, booking, checkout, invoices, a bookings page, ratings and reviews, and prices in the visitor's chosen currency.</li>
+      <li>Embedded Stripe's card form in the site's own checkout, handling successful, cancelled, and failed payments.</li>
+      <li>Kept every search filter in the URL, validated on read, so searches can be bookmarked, shared, and survive a refresh.</li>
+      <li>Moved each rental company's branding and vehicle selection into configuration, so one codebase runs the full marketplace and each company's own booking site.</li>
+      <li>Added the Spring Boot endpoints the site needed.</li>
+    </ul>
+    <p class="stack"><b>Stack:</b> Next.js, React, TypeScript, Tailwind CSS, TanStack Query, Stripe, Java, Spring Boot</p>
+  </div>
+
+  <div class="job">
+    <div class="job-head">
+      <h3>First Mutual Health <span class="role">· IT Intern · Harare</span></h3>
+      <span class="dates">Mar 2022 – Dec 2022</span>
+    </div>
+    <ul>
+      <li>Troubleshot and resolved issues with computers, networks, software, and other devices, supporting staff in person, by phone, and through remote sessions.</li>
+      <li>Installed and configured hardware and software, including setting up new computers on the network, VPNs, and printers, and trained staff on new technology.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>Skills</h2>
+  <dl class="skills">
+    <dt>Languages</dt><dd>TypeScript, JavaScript, Dart, C#, Java, SQL, Python</dd>
+    <dt>Backend</dt><dd>.NET (ASP.NET Core), Spring Boot, REST APIs, OpenAPI, PostgreSQL, MariaDB</dd>
+    <dt>Web and mobile</dt><dd>React, Next.js, TanStack Start, Tailwind CSS, Flutter, Capacitor</dd>
+    <dt>Testing</dt><dd>xUnit, Testcontainers, Vitest, Flutter tests, code review through pull requests</dd>
+    <dt>DevOps and cloud</dt><dd>Git, GitHub Actions, Docker, AWS, OpenTofu, Ansible, Coolify</dd>
+    <dt>AI-assisted work</dt><dd>Claude Code and Codex for day-to-day development, with every change reviewed and tested</dd>
+  </dl>
+</section>
+
+<section>
+  <h2>Education</h2>
+  <div class="edu">
+    <div class="job-head">
+      <h3>BSc Honours in Computer Science, First Class <span class="role">· University of Zimbabwe</span></h3>
+      <span class="dates">Aug 2018 – Dec 2023</span>
+    </div>
+  </div>
+  <div class="edu">
+    <div class="job-head">
+      <h3>A Level <span class="role">· Gokomere High School · 14 points: Physics A, Mathematics A, Chemistry B</span></h3>
+      <span class="dates">2016 – 2017</span>
+    </div>
+  </div>
+  <div class="edu">
+    <div class="job-head">
+      <h3>O Level <span class="role">· All Souls High School · 9 A's and 1 B</span></h3>
+      <span class="dates">2012 – 2015</span>
+    </div>
+  </div>
+</section>
+
+<section class="ref">
+  <h2>References</h2>
+  <p><b>Mr T. Deve</b>, Department of Computer Science, University of Zimbabwe</p>
+  <p>+263 774 222 638 · takudeve@gmail.com</p>
+</section>
+</body>
+</html>

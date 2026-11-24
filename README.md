@@ -1,8 +1,8 @@
 # nyashachiroro.com
 
-Personal portfolio for **Nyasha D. Chiroro** — Full Stack Developer based in Harare, Zimbabwe.
+Personal portfolio for **Nyasha D. Chiroro**, a software engineer in Harare, Zimbabwe.
 
-Single-page site showcasing production work on logistics and mobility platforms (MyKargoLink, MyKarLink), experience, skills, and education.
+Single-page site covering production work on Aplyk, MyKargoLink, and MyKarLink, plus experience, skills, and education.
 
 ## Live site
 
@@ -32,8 +32,18 @@ npx serve public -l 8765
 | `public/og-image.jpg` | Social preview image (1200×630, ~60 KB) |
 | `public/cv.pdf` | Downloadable CV |
 | `public/favicon/` | Favicon package (from favicon.io) |
-| `asset-gen/` | Source templates and scripts to generate OG image and logo (not deployed) |
+| `asset-gen/` | Source templates and scripts to generate the CV, OG image, and logo (not deployed) |
 | `wrangler.jsonc` | Cloudflare Workers config |
+
+### Generate CV
+
+Requires `chromium`. Edit `asset-gen/cv.html`, then:
+
+```bash
+./asset-gen/generate-cv.sh
+```
+
+Writes `public/cv.pdf` (A4, selectable text).
 
 ### Generate OG image
 

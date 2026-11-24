@@ -1,0 +1,321 @@
+/*
+ * Design tokens for nyashachiroro.com.
+ *
+ * Import after Tailwind in the app's global stylesheet:
+ *   @import "tailwindcss";
+ *   @import "./theme.css";
+ *
+ * Names follow shadcn/ui, so its components work unchanged, plus Kiwa UI's
+ * extra roles: raised and subtle backgrounds, a three-step text scale,
+ * hover/active states, "soft" tints and status colours.
+ *
+ * Grammar:
+ *   --{role}             a surface or fill
+ *   --{role}-foreground  text and icons drawn on that surface or fill
+ *   --{role}-soft        a tinted background for badges and callouts
+ *   --{role}-soft-foreground  text and icons drawn on the soft tint
+ *   --{role}-hover / --{role}-active  interaction states of a fill
+ *
+ * Use a token only for its role. If a role has no token, add one here.
+ *
+ * Contrast (WCAG 2) was measured for every text/background pair below.
+ * All pass 4.5:1 except:
+ *   - --border-strong / --input against a card is 1.5:1, under the 3:1
+ *     WCAG asks of input edges. Inputs stand out instead through their white
+ *     background on the off-white page. Revisit if the site gets forms.
+ *   - In dark mode --destructive is a fill for white text. For error text
+ *     on the page, use --destructive-soft-foreground.
+ */
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  /* Surfaces */
+  --color-background: var(--background);
+  --color-background-raised: var(--background-raised);
+  --color-background-subtle: var(--background-subtle);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-overlay-scrim: var(--overlay-scrim);
+
+  /* Text */
+  --color-foreground: var(--foreground);
+  --color-foreground-muted: var(--foreground-muted);
+  --color-foreground-soft: var(--foreground-soft);
+
+  /* Brand */
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-active: var(--primary-active);
+  --color-primary-soft: var(--primary-soft);
+  --color-primary-soft-foreground: var(--primary-soft-foreground);
+
+  /* Neutral controls */
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary-hover: var(--secondary-hover);
+  --color-secondary-active: var(--secondary-active);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  /* Status */
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-destructive-hover: var(--destructive-hover);
+  --color-destructive-soft: var(--destructive-soft);
+  --color-destructive-soft-foreground: var(--destructive-soft-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-success-soft: var(--success-soft);
+  --color-success-soft-foreground: var(--success-soft-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+  --color-info-soft: var(--info-soft);
+  --color-info-soft-foreground: var(--info-soft-foreground);
+
+  /* Edges */
+  --color-border: var(--border);
+  --color-border-subtle: var(--border-subtle);
+  --color-border-strong: var(--border-strong);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Fonts, loaded with next/font in the app layout (shadcn preset b59i6DT6oa) */
+  --font-sans: var(--font-sans); /* Geist: body and UI */
+  --font-heading: var(--font-heading); /* Noto Serif: headings */
+  --font-mono: var(--font-mono); /* Geist Mono: code and stack lines */
+
+  /* Radius, the preset's scale so its components render as designed */
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+
+  /* Elevation: a 1px ring plus soft layered depth */
+  --shadow-xs: var(--elevation-xs);
+  --shadow-sm: var(--elevation-sm);
+  --shadow-md: var(--elevation-md);
+  --shadow-lg: var(--elevation-lg);
+}
+
+@theme {
+  /* Type scale. Each role sets size, line height, weight and tracking. Pair
+     display and title with font-heading, code with font-mono. */
+  --text-display: clamp(2.25rem, 1.5rem + 3vw, 2.75rem); /* 36px → 44px */
+  --text-display--line-height: 1.1;
+  --text-display--font-weight: 500;
+  --text-display--letter-spacing: -0.02em;
+  --text-title: 1.75rem; /* 28px */
+  --text-title--line-height: 1.2;
+  --text-title--font-weight: 500;
+  --text-title--letter-spacing: -0.01em;
+  --text-heading: 1.125rem; /* 18px */
+  --text-heading--line-height: 1.3;
+  --text-heading--font-weight: 600;
+  --text-body: 1rem; /* 16px */
+  --text-body--line-height: 1.6;
+  --text-body--font-weight: 400;
+  --text-body-sm: 0.875rem; /* 14px */
+  --text-body-sm--line-height: 1.5;
+  --text-body-sm--font-weight: 400;
+  --text-code: 0.8125rem; /* 13px */
+  --text-code--line-height: 1.4;
+  --text-code--font-weight: 400;
+  --text-label: 0.75rem; /* 12px, uppercase */
+  --text-label--line-height: 1.4;
+  --text-label--font-weight: 500;
+  --text-label--letter-spacing: 0.05em;
+
+  /* Layout. Spacing otherwise uses Tailwind's 4px scale. */
+  --container-page: 72rem; /* max-w-page: header, footer, page sections */
+  --container-reading: 42rem; /* max-w-reading: case study body text */
+  --spacing-gutter: clamp(1rem, 4vw, 2rem); /* px-gutter: page side padding */
+  --spacing-section: clamp(4rem, 10vw, 7rem); /* py-section: between homepage sections */
+  --spacing-header: 4rem; /* h-header: sticky header height */
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1); /* default for UI transitions */
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1); /* things moving on screen */
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1); /* sheets and drawers */
+}
+
+:root {
+  color-scheme: light;
+
+  --radius: 0.625rem;
+
+  --duration-fast: 150ms; /* hover, press */
+  --duration-base: 200ms; /* tooltips, dropdowns */
+  --duration-slow: 300ms; /* dialogs, sheets */
+
+  /* Surfaces: off-white page, white cards, a darker well for insets */
+  --background: oklch(0.985 0 0);
+  --background-raised: oklch(1 0 0);
+  --background-subtle: oklch(0.97 0 0);
+  --card: var(--background-raised);
+  --card-foreground: var(--foreground);
+  --popover: var(--background-raised);
+  --popover-foreground: var(--foreground);
+  --overlay-scrim: oklch(0 0 0 / 0.6);
+
+  /* Text: primary, secondary, tertiary */
+  --foreground: oklch(0.145 0 0);
+  --foreground-muted: oklch(0.371 0 0);
+  --foreground-soft: oklch(0.5 0 0);
+
+  /* Brand purple #7e01d4 */
+  --primary: oklch(0.487 0.257 301.8);
+  --primary-foreground: oklch(1 0 0);
+  --primary-hover: oklch(0.438 0.218 303.724);
+  --primary-active: oklch(0.381 0.176 304.987);
+  --primary-soft: oklch(0.977 0.014 308.299);
+  --primary-soft-foreground: oklch(0.438 0.218 303.724);
+
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --secondary-hover: oklch(0.922 0 0);
+  --secondary-active: oklch(0.87 0 0);
+  --muted: var(--background-subtle);
+  --muted-foreground: var(--foreground-soft);
+  --accent: var(--background-subtle);
+  --accent-foreground: var(--foreground);
+
+  --destructive: oklch(0.577 0.235 27.325);
+  --destructive-foreground: oklch(1 0 0);
+  --destructive-hover: oklch(0.505 0.206 27.518);
+  --destructive-soft: oklch(0.971 0.013 17.38);
+  --destructive-soft-foreground: oklch(0.505 0.206 27.518);
+
+  /* "Live" badges */
+  --success: oklch(0.527 0.144 150.069);
+  --success-foreground: oklch(1 0 0);
+  --success-soft: oklch(0.982 0.018 155.826);
+  --success-soft-foreground: oklch(0.448 0.119 151.328);
+
+  /* "In testing" badges */
+  --info: oklch(0.546 0.245 262.881);
+  --info-foreground: oklch(1 0 0);
+  --info-soft: oklch(0.97 0.014 254.604);
+  --info-soft-foreground: oklch(0.488 0.243 264.376);
+
+  --border: oklch(0.922 0 0);
+  --border-subtle: oklch(0.94 0 0);
+  --border-strong: oklch(0.87 0 0);
+  --input: var(--border-strong);
+  --ring: var(--primary);
+
+  --elevation-xs:
+    0 0 0 1px oklch(0.205 0 0 / 0.05),
+    0 1px 1px -0.5px oklch(0.205 0 0 / 0.03),
+    0 3px 3px -1.5px oklch(0.205 0 0 / 0.02);
+  --elevation-sm:
+    0 0 0 1px oklch(0.205 0 0 / 0.05),
+    0 1px 1px -0.5px oklch(0.205 0 0 / 0.04),
+    0 3px 3px -1.5px oklch(0.205 0 0 / 0.04),
+    0 6px 6px -3px oklch(0.205 0 0 / 0.02);
+  --elevation-md:
+    0 0 0 1px oklch(0.205 0 0 / 0.06),
+    0 1px 1px -0.5px oklch(0.205 0 0 / 0.04),
+    0 3px 3px -1.5px oklch(0.205 0 0 / 0.04),
+    0 6px 6px -3px oklch(0.205 0 0 / 0.04),
+    0 12px 12px -6px oklch(0.205 0 0 / 0.04),
+    0 24px 24px -12px oklch(0.205 0 0 / 0.02);
+  --elevation-lg:
+    0 0 0 1px oklch(0.205 0 0 / 0.06),
+    0 1px 1px -0.5px oklch(0.205 0 0 / 0.04),
+    0 3px 3px -1.5px oklch(0.205 0 0 / 0.05),
+    0 6px 6px -3px oklch(0.205 0 0 / 0.05),
+    0 12px 12px -6px oklch(0.205 0 0 / 0.05),
+    0 24px 24px -12px oklch(0.205 0 0 / 0.04);
+}
+
+.dark {
+  color-scheme: dark;
+
+  /* Surfaces: shadcn's dark page and cards, a darker well for insets */
+  --background: oklch(0.145 0 0);
+  --background-raised: oklch(0.205 0 0);
+  --background-subtle: oklch(0.115 0 0);
+  --card: var(--background-raised);
+  --card-foreground: var(--foreground);
+  --popover: var(--background-raised);
+  --popover-foreground: var(--foreground);
+  --overlay-scrim: oklch(0 0 0 / 0.7);
+
+  --foreground: oklch(0.985 0 0);
+  --foreground-muted: oklch(0.708 0 0);
+  --foreground-soft: oklch(0.65 0 0);
+
+  /* Same brand fill; links and tints use a lighter purple */
+  --primary: oklch(0.487 0.257 301.8);
+  --primary-foreground: oklch(1 0 0);
+  --primary-hover: oklch(0.54 0.25 302);
+  --primary-active: oklch(0.58 0.24 302.5);
+  --primary-soft: oklch(0.26 0.09 302);
+  --primary-soft-foreground: oklch(0.827 0.11 306.383);
+
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --secondary-hover: oklch(0.32 0 0);
+  --secondary-active: oklch(0.371 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: var(--foreground-soft);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+
+  --destructive: oklch(0.577 0.235 27.325);
+  --destructive-foreground: oklch(1 0 0);
+  --destructive-hover: oklch(0.505 0.206 27.518);
+  --destructive-soft: oklch(0.258 0.092 26.042);
+  --destructive-soft-foreground: oklch(0.808 0.109 19.571);
+
+  --success: oklch(0.527 0.144 150.069);
+  --success-foreground: oklch(1 0 0);
+  --success-soft: oklch(0.266 0.065 152.934);
+  --success-soft-foreground: oklch(0.871 0.15 154.449);
+
+  --info: oklch(0.546 0.245 262.881);
+  --info-foreground: oklch(1 0 0);
+  --info-soft: oklch(0.282 0.091 267.935);
+  --info-soft-foreground: oklch(0.809 0.098 251.813);
+
+  --border: oklch(1 0 0 / 10%);
+  --border-subtle: oklch(1 0 0 / 6%);
+  --border-strong: oklch(1 0 0 / 15%);
+  --input: var(--border-strong);
+  --ring: oklch(0.714 0.188 305.504);
+
+  /* Depth barely shows on dark, so the ring carries the edge */
+  --elevation-xs: 0 0 0 1px oklch(1 0 0 / 0.06);
+  --elevation-sm:
+    0 0 0 1px oklch(1 0 0 / 0.08),
+    0 1px 2px oklch(0 0 0 / 0.3);
+  --elevation-md:
+    0 0 0 1px oklch(1 0 0 / 0.08),
+    0 4px 8px -2px oklch(0 0 0 / 0.4);
+  --elevation-lg:
+    0 0 0 1px oklch(1 0 0 / 0.1),
+    0 12px 24px -6px oklch(0 0 0 / 0.5);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    scroll-padding-top: var(--spacing-header);
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
